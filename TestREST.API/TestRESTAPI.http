@@ -1,4 +1,10 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
 GET https://localhost:7285
 
+###
+
 GET http://localhost:5235
+
+###
+
+GET http://localhost:5235/groups
