@@ -3,5 +3,5 @@
 public record GroupDto(
   int Id,
   string Name,
-  GroupTypeDto type,
-  string description);
+  GroupTypeDto Type,
+  string Description);
