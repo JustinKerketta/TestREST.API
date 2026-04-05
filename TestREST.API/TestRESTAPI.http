@@ -41,6 +41,18 @@ Content-Type: application/json
 
 ###
 
+Post https://localhost:7285/groups
+Content-Type: application/json
+
+{
+  "Name": "",
+  "Type": 1,
+  "Description" : "Try adding Darth Vader as an Admin"
+}
+
+
+###
+
 PUT https://localhost:7285/groups/3
 Content-Type: application/json
 

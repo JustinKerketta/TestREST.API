@@ -11,6 +11,9 @@ public class Program
       cfg.AddMaps(typeof(Program));
     });
 
+    // Validate evey endpoint in the API.
+    builder.Services.AddValidation();
+
     var app = builder.Build();
 
     app.MapRESTEndpoints();
