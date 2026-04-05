@@ -6,26 +6,28 @@ namespace TestREST.API.Endpoints;
 public static class RESTEndpoints
 {
   private static List<GroupDto> groupDtos = [
-    new GroupDto(1, "Adminstrator 01",  GroupTypeDto.Security,      "Administrator of Group"),
-      new GroupDto(2, "Adminstrator 02",  GroupTypeDto.Security,      "Administrator of Group"),
-      new GroupDto(3, "Glenn Close",      GroupTypeDto.Microsoft365,  "Regular User"),
-      new GroupDto(4, "Michael Douglas",  GroupTypeDto.Microsoft365,  "Regular User"),
-      new GroupDto(5, "Anne Archer",      GroupTypeDto.Security,      "Regular User"),
-      new GroupDto(6, "Jane Krawkowski",  GroupTypeDto.Security,      "Regular User"),
+      new GroupDto(1, "Adminstrator 01",        GroupTypeDto.Security,      "Administrator of Group"),
+      new GroupDto(2, "Adminstrator 02",        GroupTypeDto.Security,      "Administrator of Group"),
+      new GroupDto(3, "Glenn Close group",      GroupTypeDto.Microsoft365,  "Regular User"),
+      new GroupDto(4, "Michael Douglas group",  GroupTypeDto.Microsoft365,  "Regular User"),
+      new GroupDto(5, "Anne Archer group",      GroupTypeDto.Security,      "Regular User"),
+      new GroupDto(6, "Jane Krawkowski group",  GroupTypeDto.Security,      "Regular User"),
     ];
 
   public static void MapRESTEndpoints(this WebApplication app)
   {
-    app.MapGet("/", () => "Hello World!");
+    app.MapGet("/", () => "Welcome to groups and users!");
+
+    RouteGroupBuilder group = app.MapGroup("/groups");
 
     //GET /groups
-    app.MapGet("/groups", () =>
+    group.MapGet("/", () =>
     {
       return Results.Ok(groupDtos);
     });
 
     //GET /groups/1
-    app.MapGet("/groups/{id}", (int id) =>
+    group.MapGet("/{id}", (int id) =>
     {
       GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
       if (groupDto == null)
@@ -36,7 +38,7 @@ public static class RESTEndpoints
     }).WithName("GetGroup");
 
     // POST /groups/
-    app.MapPost("/groups", (CreateGroupDto newCreateGroupDto, IMapper mapper) =>
+    group.MapPost("/", (CreateGroupDto newCreateGroupDto, IMapper mapper) =>
     {
       int newId = groupDtos.Count + 1;
       GroupDto newGroupDto = mapper.Map<GroupDto>(
@@ -46,7 +48,7 @@ public static class RESTEndpoints
     });
 
     // PUT /groups/id
-    app.MapPut("/groups/{id}", (int id, UpdateGroupDto updateGroupDto, IMapper mapper) =>
+    group.MapPut("/{id}", (int id, UpdateGroupDto updateGroupDto, IMapper mapper) =>
     {
       GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
       if (groupDto != null)
@@ -61,7 +63,7 @@ public static class RESTEndpoints
     });
 
     // Delete /groups/id
-    app.MapDelete("/groups/{id}", (int id) =>
+    group.MapDelete("/{id}", (int id) =>
     {
       GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
       if (groupDto != null)
