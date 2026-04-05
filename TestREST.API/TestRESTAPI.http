@@ -8,3 +8,33 @@ GET http://localhost:5235
 ###
 
 GET http://localhost:5235/groups
+
+###
+
+GET https://localhost:7285/groups/3
+
+###
+
+GET https://localhost:7285/groups/13
+
+###
+
+Post https://localhost:7285/groups
+Content-Type: application/json
+
+{
+  "Name": "Jake Elwood",
+  "Type": 0,
+  "Description" : "Try adding The Blues Brothers"
+}
+
+###
+
+Post https://localhost:7285/groups
+Content-Type: application/json
+
+{
+  "Name": "Darth Vader",
+  "Type": 1,
+  "Description" : "Try adding Adrth Vader as an Admin"
+}
