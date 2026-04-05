@@ -15,5 +15,13 @@ public class DtotoDtoMapper : Profile
               // Rename the "Id" field in the destination "context" as "NewId"
               return context.Items["NewId"];
           }));
+
+      CreateMap<UpdateGroupDto, GroupDto>()
+          // "Id" must match the name of the parameter in your record definition
+          .ForCtorParam("Id", opt => opt.MapFrom((src, context) => 
+          {
+              // Rename the "Id" field in the destination "context" as "NewId"
+              return context.Items["NewId"];
+          }));
   }
 }

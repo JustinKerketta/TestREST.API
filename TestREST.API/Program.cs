@@ -45,6 +45,21 @@ public class Program
       return Results.CreatedAtRoute("GetGroup", new { id = newGroupDto.Id }, newGroupDto);
     });
 
+    // PUT /groups/
+    app.MapPut("/groups/{id}", (int id, UpdateGroupDto updateGroupDto, IMapper mapper) =>
+    {
+      GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
+      if (groupDto != null)
+      {
+        GroupDto updatedGroupDto = mapper.Map<GroupDto>(
+          updateGroupDto, opt => opt.Items["NewId"] = groupDto.Id);
+        groupDtos.Remove(groupDto);
+        groupDtos.Add(updatedGroupDto);
+        return Results.NoContent();
+      }
+      return Results.NotFound();
+    });
+
     app.Run();
   }
 }

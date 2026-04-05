@@ -38,3 +38,14 @@ Content-Type: application/json
   "Type": 1,
   "Description" : "Try adding Darth Vader as an Admin"
 }
+
+###
+
+PUT https://localhost:7285/groups/3
+Content-Type: application/json
+
+{
+  "Name": "Glenn Vader",
+  "Type": 1,
+  "Description" : "She was an evil woman"
+}
