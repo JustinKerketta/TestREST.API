@@ -37,7 +37,6 @@ public class Program
     }).WithName("GetGroup");
 
     // POST /groups/
-    CreateGroupDto newGroupDto = new ("Jake Elwood", GroupTypeDto.Security, "Regular User");
     app.MapPost("/groups", (CreateGroupDto newCreateGroupDto, IMapper mapper) => {
       int newId = groupDtos.Count+1;
       GroupDto newGroupDto = mapper.Map<GroupDto>(

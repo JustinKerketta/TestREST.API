@@ -36,5 +36,5 @@ Content-Type: application/json
 {
   "Name": "Darth Vader",
   "Type": 1,
-  "Description" : "Try adding Adrth Vader as an Admin"
+  "Description" : "Try adding Darth Vader as an Admin"
 }
