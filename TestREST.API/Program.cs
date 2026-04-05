@@ -33,7 +33,12 @@ public class Program
     //GET /groups/1
     app.MapGet("/groups/{id}", (int id) => 
     {
-      return Results.Ok(groupDtos.Find(groupDto => groupDto.Id == id));
+      GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
+      if (groupDto == null)
+      {
+        return Results.NotFound();
+      }
+      return Results.Ok(groupDto);
     }).WithName("GetGroup");
 
     // POST /groups/
