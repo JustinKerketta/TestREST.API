@@ -1,0 +1,116 @@
+\documentclass[12pt]{report}
+\usepackage{comment}
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage[a4paper, margin=0.125in, includefoot]{geometry} % Optional: Adjust margins as needed
+\graphicspath{ {./Images/} }
+% --- Preamble: Metadata ---
+\title{}
+\author{Justin K}
+\date{\today} % Or use a specific date, e.g., \date{January 19, 2026}
+
+% ---- Nacris ----
+\newcommand{\As}{\emph{async}\xspace}
+\newcommand{\Aw}{\emph{await}\xspace}
+\newcommand{\Bbl}{\emph{Babel}\xspace}
+\newcommand{\Bs}{\emph{Bootstrap}\xspace}
+\newcommand{\Bz}{\emph{Blazor}\xspace}
+\newcommand{\Cs}{\emph{C\#}\xspace}
+\newcommand{\Cn}{\emph{continuation}\xspace}
+\newcommand{\Ex}{\emph{Express}\xspace}
+\newcommand{\Hk}{\emph{Hook}\xspace}
+\newcommand{\Hks}{\emph{Hook}s\xspace}
+\newcommand{\IA}{\emph{Interactive Auto}\xspace}
+\newcommand{\IAM}{\emph{IAM}\xspace}
+\newcommand{\IDP}{\emph{IDP}\xspace}
+\newcommand{\IS}{\emph{Interactive Server}\xspace}
+\newcommand{\IWA}{\emph{Interactive Web Assembly}\xspace}
+\newcommand{\JS}{\emph{JavaScript}\xspace}
+\newcommand{\JSX}{\emph{JSX}\xspace}
+\newcommand{\Nd}{\emph{Node}\xspace}
+\newcommand{\NJS}{\emph{NextJS}\xspace}
+\newcommand{\OA}{\emph{OAuth2}\xspace}
+\newcommand{\OIDC}{\emph{OpenID Connect}\xspace}
+\newcommand{\Rt}{\emph{React}\xspace}
+\newcommand{\PR}{\emph{Prop}\xspace}
+\newcommand{\Prs}{\emph{Prop}s\xspace}
+\newcommand{\RtD}{\emph{ReactDOM}\xspace}
+\newcommand{\Rz}{\emph{Razor}\xspace}
+\newcommand{\SPA}{\emph{SPA}\xspace}
+\newcommand{\SPAs}{\emph{SPA}s\xspace}
+\newcommand{\SSR}{\emph{SSR}\xspace}
+\newcommand{\St}{\emph{State}\xspace}
+\newcommand{\TS}{\emph{TypeScript}\xspace}
+\newcommand{\Vt}{\emph{Vite}\xspace}
+\newcommand{\WA}{\emph{WebAssembly}\xspace}
+\newcommand{\UE}{\emph{useEffect}\xspace}
+
+\begin{document}
+
+% --- Title and Table of Contents ---
+\maketitle
+\tableofcontents
+\begin{flushleft}
+
+
+% ------------------------ Section ------------------------ 
+\section{Initial Setup}
+
+\begin{enumerate}
+\item  dotnet new list 
+\newline
+Lists templates for starting new applications.
+\item  You can view files in the project by using either the \emph{File Explorer} or the \emph{Solution Explorer}.
+\item \emph{Program.cs} creates an instance of the \emph{app} object, which is an instance of the \emph{WebApplication} object that is the hosting application.
+\item \emph{app} starts an HTTP server for your application so that you can start listening to HTTP requests.
+\item The \emph{builder} object can be used to configure services for the application.
+\item The \emph{Build()} method introduces the \emph{Kestrel Web Server}, reading \emph{appsettings.json}.
+\item \verb|<Project Sdk="Microsoft.NET.Sdk.Web">|
+\newline
+The above from the \emph{.csproj} file imports all the libraries required for a web API application.
+\item dotnet build
+\newline
+to build the application from your solution directory.
+\item Use a \emph{record} for a \emph{Dto}, since it represents a contract between a client and a server as to how data will be transferred and this data should be immutable
+\newline
+
+\end{enumerate}
+
+% ------------------------ Section ------------------------ 
+\section{Entra Setup}
+
+\begin{enumerate}
+\item Log into Entra ID.
+\item Select the tenant for the application. To begin with, set the organizational directory for the tenant as single-tenant. 
+\item The tenant should have at least one user with the role "Application Developer".
+\item The backend API will accept tokens that have been generate by only our tenant.
+\item Every API that you register in Entra is going to need a \emph{scope} that defines the permissions required by a client that requires access to this API.
+\item Scopes are defined by the \emph{Expose an API} section in Entra. every scope is prefixed with \emph{api://}.
+
+\end{enumerate}
+
+% ------------------------ Section ------------------------ 
+\section{Securing the ASP.NET Core API in Entra}
+
+\begin{enumerate}
+\item Each endpoint that is restricted should have \emph{.RequireAuthorization()} appended.
+\item The ASP.NET API back-end code needs to be able to validate the access tokens that will be attached to API requests that it receives. 
+\newline 
+This requires NuGet package \emph{Microsoft.AspNetCore.Authentication.JwtBearer}.
+\item An \emph{Authentication Scheme} defines which handler to use to validate incoming access tokens.
+\item Update the middleware in the ASP.NET Core application for authentication and authorization. 
+\item To authorize the backend API to make requests, an access token will need to be attached to each request. To get this application token, a client application has to be registered with Entra.
+\item The client application can be Postman, for testing purposes. The Redirect URI is \verb|https://oauth.pstmn.io/v1/callback|.
+\newline
+Register Postman as an App in Entra.
+\item Entra has to be notified that Postman can talk to the ASP.NET Core back-end API.
+\item Postman has to be granted API permissions in Entra to access the scope defined in the back-end API.
+\end{enumerate}
+
+\end{flushleft}
+
+\end{document}
