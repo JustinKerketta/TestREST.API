@@ -35,7 +35,8 @@ public static class RESTEndpoints
         return Results.NotFound();
       }
       return Results.Ok(groupDto);
-    }).WithName("GetGroup");
+    }).WithName("GetGroup")
+    ;
 
     // POST /groups/
     group.MapPost("/", (CreateGroupDto newCreateGroupDto, IMapper mapper) =>
@@ -45,7 +46,8 @@ public static class RESTEndpoints
         newCreateGroupDto, opt => opt.Items["NewId"] = newId);
       groupDtos.Add(newGroupDto);
       return Results.CreatedAtRoute("GetGroup", new { id = newGroupDto.Id }, newGroupDto);
-    });
+    })
+    .RequireAuthorization();
 
     // PUT /groups/id
     group.MapPut("/{id}", (int id, UpdateGroupDto updateGroupDto, IMapper mapper) =>
@@ -60,7 +62,8 @@ public static class RESTEndpoints
         return Results.NoContent();
       }
       return Results.NotFound();
-    });
+    })
+    .RequireAuthorization();
 
     // Delete /groups/id
     group.MapDelete("/{id}", (int id) =>
@@ -72,6 +75,7 @@ public static class RESTEndpoints
         return Results.NoContent();
       }
       return Results.NotFound();
-    });
+    })
+    .RequireAuthorization();
   }
 }
