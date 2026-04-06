@@ -3,6 +3,12 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+*.aux
+*.log
+*.out
+*.pdf
+*.toc
+
 # dotenv files
 .env
 
