@@ -21,7 +21,7 @@ public static class DataExtensions
     using var scope = app.Services.CreateScope();
 
     // Create an instance of the database context
-    var dbContext = scope.ServiceProvider.getRequiredService<>(yourDbContext);
+    var dbContext = scope.ServiceProvider.GetRequiredService<>(yourDbContext);
 
     // Use the database context to access the datbase context and run migrations
     dbContext.Database.Migrate();
