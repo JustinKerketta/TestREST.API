@@ -8,7 +8,7 @@ dotnet tool install --global dotnet-ef --version 10.0.5
 ### EF Core Migrations
 dotnet ef migrations add InitialCreate --output-dir .\Database\Migrations
 
-# Remove all database updates
+### Remove all database updates
 dotnet ef database update 0
 
 
