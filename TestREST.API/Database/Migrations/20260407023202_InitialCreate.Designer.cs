@@ -11,7 +11,7 @@ using TestREST.API.Database.DbContexts;
 namespace TestREST.API.Database.Migrations
 {
     [DbContext(typeof(RESTContext))]
-    [Migration("20260407000310_InitialCreate")]
+    [Migration("20260407023202_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,6 +39,9 @@ namespace TestREST.API.Database.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");

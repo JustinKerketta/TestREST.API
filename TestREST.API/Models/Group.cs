@@ -6,7 +6,7 @@ public class Group
 
   public required string Name { get; set; }
 
-  GroupType Type { get; set; }
+  public GroupType Type { get; set; }
 
   public required  string Description {get; set;}
 }
