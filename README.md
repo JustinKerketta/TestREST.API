@@ -2,16 +2,37 @@
 ### 1. Docker command to Build Latex documents
 docker run --name LatexNotesBuild --rm -v ".:/data" blang/latex pdflatex DevNotes.tex
 
-### 2. Install dotnet EF tools
+### 2. Docker command to run SQL Server container
+```
+docker run -d `
+   --name sql1 `
+   -e "ACCEPT_EULA=y" `
+   -e 'MSSQL_SA_PASSWORD=JustinK11%#' `
+   -p 1433:1433 `
+   -v sqlServerVolume:/var/opt/mssql `
+   mcr.microsoft.com/mssql/server:2025-latest
+```
+
+### 3. Docker command to list volumes
+```
+docker volume ls
+```
+
+### 4. Docker command to inspect volumes
+
+`docker volume inspect` *volumeName*
+
+
+### 5. Install dotnet EF tools
 dotnet tool install --global dotnet-ef --version 10.0.5
 
-### 3. EF Core Migrations
-dotnet ef migrations add InitialCreate --output-dir .\Database\Migrations
+### 6. EF Core Migrations
+`dotnet ef migrations add InitialCreate --output-dir` *.\Database\Migrations*
 
-### 4. Remove all database updates
+### 7. Remove all database updates
 dotnet ef database update 0
 
-### 5. Add an extension class that can be called on startup from `Program.cs` to automatically run database migrations
+### 8. Add an extension class that can be called on startup from `Program.cs` to automatically run database migrations
 ```
 public static class DataExtensions
 {
@@ -29,7 +50,7 @@ public static class DataExtensions
 }
 ```
 
-#### 5.1 Now in `Program.cs`, call to `app.MigrateDb()` before `app.Run()`
+#### 8.1 Now in `Program.cs`, call to `app.MigrateDb()` before `app.Run()`
 ```
 .
 .
@@ -39,7 +60,7 @@ app.MigrateDb();
 .
 app.Run();
 ```
-### 6 Connection string specified in `appsettings.json` for SQL Server (Notice EF Core logging changed as well)
+### 9. Connection string specified in `appsettings.json` for SQL Server (Notice EF Core logging changed as well)
 ```
 {
   "Logging": {
@@ -56,12 +77,10 @@ app.Run();
 }
 ```
 
-#### 6.1 Update `Program.cs` to add the database context to your application's services collection
+#### 9.1 Update `Program.cs` to add the database context to your application's services collection
 ```
 builder.Services.AddDbContextFactory<CustomDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:DefaultConnection"])
 );
-
-
 ```
