@@ -40,14 +40,25 @@ namespace TestREST.API.Database.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Group");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "This group handles all security tasks",
+                            Name = "Admin Group",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "This group is responsible for Microsoft 365 services",
+                            Name = "Microsoft 365 Group",
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("TestREST.API.Models.User", b =>
@@ -69,18 +80,50 @@ namespace TestREST.API.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Security Expert",
+                            Name = "Alice"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Microsoft 365 Administrator",
+                            Name = "Bob"
+                        });
                 });
 
-            modelBuilder.Entity("TestREST.API.Models.Group", b =>
+            modelBuilder.Entity("UserGroup", b =>
                 {
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGroup");
+                });
+
+            modelBuilder.Entity("UserGroup", b =>
+                {
+                    b.HasOne("TestREST.API.Models.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TestREST.API.Models.User", null)
-                        .WithMany("Groups")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("TestREST.API.Models.User", b =>
-                {
-                    b.Navigation("Groups");
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
