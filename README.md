@@ -39,4 +39,19 @@ app.MigrateDb();
 .
 app.Run();
 ```
+### 6 Connection string specified in `appsettings.json` for SQL Server
+```
+"ConnectionStrings": {
+  "DefaultConnection": "Data Source=localhost,1433;Persist Security Info=True;User ID=sa;Password=CustomPassword;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0;Database=DatabaseName;"
+}
+```
 
+#### 6.1 Update `Program.cs` to add the database context to your application's services collection
+```
+builder.Services.AddDbContextFactory<CustomDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:DefaultConnection"])
+);
+
+
+```
