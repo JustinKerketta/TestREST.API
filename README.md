@@ -84,3 +84,9 @@ builder.Services.AddDbContextFactory<CustomDbContext>(options =>
         builder.Configuration["ConnectionStrings:DefaultConnection"])
 );
 ```
+
+### 10. Create an environment variable in PowerShell for the connection string
+```
+$env:ConnectionStrings__DefaultConnection="DefaultConnection": "Data Source=localhost,1433;Persist Security Info=True;User ID=sa;Password=Mssql2025!;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0;Database=RESTAPI;"
+```
+The code in `Program.cs` does not change. Setting the environment variable as shown about will add the connection string `"ConnectionStrings:DefaultConnection"` to `builder.Configuration`,
