@@ -39,10 +39,20 @@ app.MigrateDb();
 .
 app.Run();
 ```
-### 6 Connection string specified in `appsettings.json` for SQL Server
+### 6 Connection string specified in `appsettings.json` for SQL Server (Notice EF Core logging changed as well)
 ```
-"ConnectionStrings": {
-  "DefaultConnection": "Data Source=localhost,1433;Persist Security Info=True;User ID=sa;Password=CustomPassword;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0;Database=DatabaseName;"
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost,1433;Persist Security Info=True;User ID=sa;Password=Mssql2025!;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0;Database=RESTAPI;"
+  }
 }
 ```
 
