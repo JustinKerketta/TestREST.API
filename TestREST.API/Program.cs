@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TestREST.API.Database.DbContexts;
 using TestREST.API.Endpoints;
 
 namespace TestREST.API;
@@ -12,7 +14,12 @@ public class Program
       cfg.AddMaps(typeof(Program));
     });
 
-    // Validate evey endpoint in the API.
+    builder.Services.AddDbContextFactory<RESTContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:DefaultConnection"]
+        ));
+
+    // Validate evey endpoint in the API. This validates the data annotations specified for each field of Dtos.
     builder.Services.AddValidation();
 
     // Add an authentication scheme

@@ -3,9 +3,9 @@ using TestREST.API.Dtos;
 
 namespace TestREST.API.Endpoints;
 
-public static class RESTEndpoints
+public static class GroupEndpoints
 {
-  private static List<GroupDto> groupDtos = [
+  private static readonly List<GroupDto> groupDtos = [
       new GroupDto(1, "Adminstrator 01",        GroupTypeDto.Security,      "Administrator of Group"),
       new GroupDto(2, "Adminstrator 02",        GroupTypeDto.Security,      "Administrator of Group"),
       new GroupDto(3, "Glenn Close group",      GroupTypeDto.Microsoft365,  "Regular User"),

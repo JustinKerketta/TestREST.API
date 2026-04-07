@@ -3,7 +3,10 @@
 public class Group
 {
   public int Id { get; set; }
+
   public required string Name { get; set; }
+
   GroupType Type { get; set; }
+
   public required  string Description {get; set;}
 }
