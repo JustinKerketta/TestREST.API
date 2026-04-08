@@ -11,6 +11,10 @@ GET http://localhost:5235/groups
 
 ###
 
+GET https://localhost:7285/groups/1
+
+###
+
 GET https://localhost:7285/groups/3
 
 ###

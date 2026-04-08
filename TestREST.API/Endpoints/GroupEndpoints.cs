@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TestREST.API.Database.DbContexts;
 using TestREST.API.Dtos;
 using TestREST.API.Models;
@@ -23,25 +24,34 @@ public static class GroupEndpoints
     RouteGroupBuilder group = app.MapGroup("/groups");
 
     //GET /groups
-    group.MapGet("/", () =>
+    group.MapGet("/", async (IMapper mapper, RESTContext restContext) =>
     {
-      return Results.Ok(groupDtos);
+      List<Group> groups = await restContext.Group.ToListAsync();
+      
+        // Map the list of groups to a list of GroupDto using AutoMapper
+      List<GroupDto> groupDtos01 = mapper.Map<List<GroupDto>>(groups);
+      return Results.Ok(groupDtos01);
     });
 
     //GET /groups/1
-    group.MapGet("/{id}", (int id) =>
+    group.MapGet("/{id}", async (int id, 
+      IMapper mapper, RESTContext restContext) =>
     {
-      GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
-      if (groupDto == null)
+      Group? retrievedGroup= await restContext.Group.SingleOrDefaultAsync(group =>
+        group.Id == id
+      );
+
+      if (retrievedGroup == null)
       {
         return Results.NotFound();
       }
-      return Results.Ok(groupDto);
+      Group retrievedGroupDto = mapper.Map<Group>(retrievedGroup);
+      return Results.Ok(retrievedGroupDto);
     }).WithName("GetGroup")
     ;
 
     // POST /groups/
-    group.MapPost("/", (CreateGroupDto newCreateGroupDto,
+    group.MapPost("/", async (CreateGroupDto newCreateGroupDto,
       IMapper mapper, RESTContext restContext) =>
     {
       //int newId = groupDtos.Count + 1;
@@ -53,7 +63,7 @@ public static class GroupEndpoints
 
       Group groupToAdd = mapper.Map<Group>(newCreateGroupDto);
       restContext.Group.Add(groupToAdd);
-      restContext.SaveChanges();
+      await restContext.SaveChangesAsync();
 
       GroupDto groupAddedDto = mapper.Map<GroupDto>(groupToAdd);
       return Results.CreatedAtRoute("GetGroup", new { id = groupToAdd.Id }, groupAddedDto);
