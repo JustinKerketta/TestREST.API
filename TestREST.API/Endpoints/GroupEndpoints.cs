@@ -27,17 +27,17 @@ public static class GroupEndpoints
     group.MapGet("/", async (IMapper mapper, RESTContext restContext) =>
     {
       List<Group> groups = await restContext.Group.ToListAsync();
-      
-        // Map the list of groups to a list of GroupDto using AutoMapper
+
+      // Map the list of groups to a list of GroupDto using AutoMapper
       List<GroupDto> groupDtos01 = mapper.Map<List<GroupDto>>(groups);
       return Results.Ok(groupDtos01);
     });
 
     //GET /groups/1
-    group.MapGet("/{id}", async (int id, 
+    group.MapGet("/{id}", async (int id,
       IMapper mapper, RESTContext restContext) =>
     {
-      Group? retrievedGroup= await restContext.Group.SingleOrDefaultAsync(group =>
+      Group? retrievedGroup = await restContext.Group.SingleOrDefaultAsync(group =>
         group.Id == id
       );
 
@@ -45,7 +45,7 @@ public static class GroupEndpoints
       {
         return Results.NotFound();
       }
-      Group retrievedGroupDto = mapper.Map<Group>(retrievedGroup);
+      GroupDto retrievedGroupDto = mapper.Map<GroupDto>(retrievedGroup);
       return Results.Ok(retrievedGroupDto);
     }).WithName("GetGroup")
     ;
@@ -65,7 +65,15 @@ public static class GroupEndpoints
       restContext.Group.Add(groupToAdd);
       await restContext.SaveChangesAsync();
 
-      GroupDto groupAddedDto = mapper.Map<GroupDto>(groupToAdd);
+      // Retrieve the newly created group using its Id
+      Group? retrievedGroup = await restContext.Group
+          .SingleOrDefaultAsync(g => g.Id == groupToAdd.Id);
+
+      if (retrievedGroup == null)
+      {
+        return Results.BadRequest();
+      }
+      GroupDto groupAddedDto = mapper.Map<GroupDto>(retrievedGroup);
       return Results.CreatedAtRoute("GetGroup", new { id = groupToAdd.Id }, groupAddedDto);
     })
     //.RequireAuthorization()

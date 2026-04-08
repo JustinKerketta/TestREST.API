@@ -27,9 +27,9 @@ Post https://localhost:7285/groups
 Content-Type: application/json
 
 {
-  "Name": "Jake Elwood",
-  "Type": 0,
-  "Description" : "Try adding The Blues Brothers"
+  "Name": "John Elway",
+  "Type": 1,
+  "Description" : "Broncos Quarterback"
 }
 
 ###
