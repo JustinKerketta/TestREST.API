@@ -80,20 +80,34 @@ public static class GroupEndpoints
     ;
 
     // PUT /groups/id
-    group.MapPut("/{id}", (int id, UpdateGroupDto updateGroupDto, IMapper mapper) =>
+    group.MapPut("/{id}", async (int id, UpdateGroupDto updateGroupDto,
+      IMapper mapper, RESTContext restContext) =>
     {
-      GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
-      if (groupDto != null)
+      Group? groupToUpdate = await restContext.Group.FindAsync(id);
+      if (groupToUpdate != null)
       {
-        GroupDto updatedGroupDto = mapper.Map<GroupDto>(
-          updateGroupDto, opt => opt.Items["NewId"] = groupDto.Id);
-        groupDtos.Remove(groupDto);
-        groupDtos.Add(updatedGroupDto);
-        return Results.NoContent();
+        groupToUpdate.Name = updateGroupDto.Name;
+        groupToUpdate.Type = (GroupType)updateGroupDto.Type;
+        groupToUpdate.Description = updateGroupDto.Description;
+
+        await restContext.SaveChangesAsync();
+
+        // Retrieve the newly created group using its Id
+        Group? retrievedGroup = await restContext.Group
+            .SingleOrDefaultAsync(g => g.Id == id);
+
+        if (retrievedGroup == null)
+        {
+          return Results.BadRequest();
+        }
+        GroupDto retrievedDto = mapper.Map<GroupDto>(retrievedGroup);
+
+        return Results.Ok(retrievedDto);
       }
       return Results.NotFound();
     })
-    .RequireAuthorization();
+    //.RequireAuthorization()
+    ;
 
     // Delete /groups/id
     group.MapDelete("/{id}", (int id) =>

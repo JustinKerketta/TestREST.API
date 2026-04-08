@@ -57,7 +57,7 @@ Content-Type: application/json
 
 ###
 
-PUT https://localhost:7285/groups/3
+PUT https://localhost:7285/groups/1001
 Content-Type: application/json
 
 {

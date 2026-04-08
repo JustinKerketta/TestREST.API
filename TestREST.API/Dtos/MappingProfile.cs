@@ -35,5 +35,7 @@ public class MappingProfile : Profile
 
     // Mapping from Group to GroupDto
     CreateMap<Group, GroupDto>();
+
+    CreateMap<UpdateGroupDto, Group>();
   }
 }
