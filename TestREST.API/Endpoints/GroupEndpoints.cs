@@ -110,16 +110,20 @@ public static class GroupEndpoints
     ;
 
     // Delete /groups/id
-    group.MapDelete("/{id}", (int id) =>
+    group.MapDelete("/{id}", async (int id, RESTContext restContext) =>
     {
-      GroupDto? groupDto = groupDtos.Find(group => group.Id == id);
-      if (groupDto != null)
+      Group? group= await restContext.Group.FindAsync(id);
+      if (group != null)
       {
-        groupDtos.Remove(groupDto);
+        //There is no need to "await restContext.SaveChangesAsync();". All records that
+        // match the specified `id` are deleted at once.
+        await restContext.Group.Where(group => group.Id == id).ExecuteDeleteAsync();
+
         return Results.NoContent();
       }
       return Results.NotFound();
     })
-    .RequireAuthorization();
+    //.RequireAuthorization()
+    ;
   }
 }

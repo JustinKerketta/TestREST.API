@@ -76,7 +76,12 @@ Content-Type: application/json
   "Type": 1,
   "Description" : "She was an evil woman"
 }
+}
 
 ###
 
 DELETE https://localhost:7285/groups/3
+
+###
+
+DELETE https://localhost:7285/groups/1003
