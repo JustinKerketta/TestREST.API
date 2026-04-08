@@ -111,6 +111,13 @@ Register Postman as an App in Entra.
 \item Postman has to be granted API permissions in Entra to access the scope defined in the back-end API.
 \end{enumerate}
 
+% ------------------------ Section ------------------------ 
+\section{Dependency Injection And Database Contexts}
+\begin{enumerate}
+\item DbContext is not thread-safe. Setting the lifetime of DbContext to \emph{Scoped} ensures that the connections do not span across HTTP requests.
+\item DbContexts are an expensive resource. A scoped lifetime for DbContexts helps ensure that resources are used wisely.
+\end{enumerate}
+
 \end{flushleft}
 
 \end{document}
