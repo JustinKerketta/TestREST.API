@@ -5,9 +5,9 @@ namespace TestREST.API.Dtos;
 
 // Classes that map from one type to another should inherit from class Profile  so that these classes can be
 // detected by the class AutoMapper when Services are being added in "Program.cs".
-public class DtotoDtoMapper : Profile
+public class MappingProfile : Profile
 {
-  public DtotoDtoMapper()
+  public MappingProfile()
   {
     CreateMap<CreateGroupDto, GroupDto>()
         // "Id" must match the name of the parameter in your record definition
