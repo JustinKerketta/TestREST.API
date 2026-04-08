@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using TestREST.API.Database.DbContexts;
 using TestREST.API.Dtos;
+using TestREST.API.Models;
 
 namespace TestREST.API.Endpoints;
 
@@ -39,15 +41,25 @@ public static class GroupEndpoints
     ;
 
     // POST /groups/
-    group.MapPost("/", (CreateGroupDto newCreateGroupDto, IMapper mapper) =>
+    group.MapPost("/", (CreateGroupDto newCreateGroupDto,
+      IMapper mapper, RESTContext restContext) =>
     {
-      int newId = groupDtos.Count + 1;
-      GroupDto newGroupDto = mapper.Map<GroupDto>(
-        newCreateGroupDto, opt => opt.Items["NewId"] = newId);
-      groupDtos.Add(newGroupDto);
-      return Results.CreatedAtRoute("GetGroup", new { id = newGroupDto.Id }, newGroupDto);
+      //int newId = groupDtos.Count + 1;
+      //GroupDto newGroupDto = mapper.Map<GroupDto>(
+      //  newCreateGroupDto, opt => opt.Items["NewId"] = newId);
+      //groupDtos.Add(newGroupDto);
+
+      //return Results.CreatedAtRoute("GetGroup", new { id = newGroupDto.Id }, newGroupDto);
+
+      Group groupToAdd = mapper.Map<Group>(newCreateGroupDto);
+      restContext.Group.Add(groupToAdd);
+      restContext.SaveChanges();
+
+      GroupDto groupAddedDto = mapper.Map<GroupDto>(groupToAdd);
+      return Results.CreatedAtRoute("GetGroup", new { id = groupToAdd.Id }, groupAddedDto);
     })
-    .RequireAuthorization();
+    //.RequireAuthorization()
+    ;
 
     // PUT /groups/id
     group.MapPut("/{id}", (int id, UpdateGroupDto updateGroupDto, IMapper mapper) =>

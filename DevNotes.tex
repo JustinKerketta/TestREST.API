@@ -121,6 +121,7 @@ Register Postman as an App in Entra.
 \begin{enumerate}
 \item DbContext is not thread-safe. Setting the lifetime of DbContext to \emph{Scoped} ensures that the connections do not span across HTTP requests.
 \item DbContexts are an expensive resource. A scoped lifetime for DbContexts helps ensure that resources are used wisely.
+\item \emph{Scoped} lifetime services are created once per HTTP request and reused within that HTTP request.
 \item An environment variable can be set in PowerShell to hide the connection string during production, so that this string is not coded in the \emph{appsettings.json} file.
 \begin{lstlisting}[breaklines=true]
 $env:ConnectionStrings__DefaultConnection="DefaultConnection": "Data Source=localhost,1433;Persist Security Info=True;User ID=sa;Password=Mssql2025!;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0;Database=RESTAPI;"
