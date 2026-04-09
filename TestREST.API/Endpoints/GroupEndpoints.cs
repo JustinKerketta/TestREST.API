@@ -14,7 +14,7 @@ public static class GroupEndpoints
     RouteGroupBuilder group = app.MapGroup("/groups");
 
     //GET /groups
-    group.MapGet("/", async (IMapper mapper, RESTContext restContext) =>
+    group.MapGet("/", async (IMapper mapper, AppDbContext restContext) =>
     {
       List<Group> groups = await restContext.Group.ToListAsync();
 
@@ -25,7 +25,7 @@ public static class GroupEndpoints
 
     //GET /groups/1
     group.MapGet("/{id}", async (int id,
-      IMapper mapper, RESTContext restContext) =>
+      IMapper mapper, AppDbContext restContext) =>
     {
       Group? retrievedGroup = await restContext.Group.SingleOrDefaultAsync(group =>
         group.Id == id
@@ -42,7 +42,7 @@ public static class GroupEndpoints
 
     // POST /groups/
     group.MapPost("/", async (CreateGroupDto newCreateGroupDto,
-      IMapper mapper, RESTContext restContext) =>
+      IMapper mapper, AppDbContext restContext) =>
     {
       //int newId = groupDtos.Count + 1;
       //GroupDto newGroupDto = mapper.Map<GroupDto>(
@@ -71,7 +71,7 @@ public static class GroupEndpoints
 
     // PUT /groups/id
     group.MapPut("/{id}", async (int id, UpdateGroupDto updateGroupDto,
-      IMapper mapper, RESTContext restContext) =>
+      IMapper mapper, AppDbContext restContext) =>
     {
       Group? groupToUpdate = await restContext.Group.FindAsync(id);
       if (groupToUpdate != null)
@@ -100,7 +100,7 @@ public static class GroupEndpoints
     ;
 
     // Delete /groups/id
-    group.MapDelete("/{id}", async (int id, RESTContext restContext) =>
+    group.MapDelete("/{id}", async (int id, AppDbContext restContext) =>
     {
       Group? group= await restContext.Group.FindAsync(id);
       if (group != null)

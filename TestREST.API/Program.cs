@@ -13,7 +13,7 @@ public class Program
       cfg.AddMaps(typeof(Program));
     });
 
-    builder.Services.AddDbContextFactory<RESTContext>(options =>
+    builder.Services.AddDbContextFactory<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:DefaultConnection"]
         ));
