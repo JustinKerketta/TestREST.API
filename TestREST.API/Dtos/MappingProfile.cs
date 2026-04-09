@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TestREST.API.Models;
+using Shared.Models;
 
 namespace TestREST.API.Dtos;
 

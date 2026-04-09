@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TestREST.API.Models;
-
-namespace TestREST.API.Database.DbContexts;
+using Shared.Models;
 
 public class RESTContext(DbContextOptions<RESTContext> dbContextoptions) : DbContext(dbContextoptions)
 {

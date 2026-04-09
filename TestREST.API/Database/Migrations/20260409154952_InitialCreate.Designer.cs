@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TestREST.API.Database.DbContexts;
 
 #nullable disable
 
 namespace TestREST.API.Database.Migrations
 {
     [DbContext(typeof(RESTContext))]
-    [Migration("20260407032205_InitialCreate")]
+    [Migration("20260409154952_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,7 +23,7 @@ namespace TestREST.API.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TestREST.API.Models.Group", b =>
+            modelBuilder.Entity("Shared.Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +63,7 @@ namespace TestREST.API.Database.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TestREST.API.Models.User", b =>
+            modelBuilder.Entity("Shared.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,13 +115,13 @@ namespace TestREST.API.Database.Migrations
 
             modelBuilder.Entity("UserGroup", b =>
                 {
-                    b.HasOne("TestREST.API.Models.Group", null)
+                    b.HasOne("Shared.Models.Group", null)
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TestREST.API.Models.User", null)
+                    b.HasOne("Shared.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
