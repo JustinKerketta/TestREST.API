@@ -1,4 +1,4 @@
-﻿namespace TestREST.API.Models;
+﻿namespace Shared.Models;
 
 public enum GroupType
 {
