@@ -139,6 +139,7 @@ To create a shared project in Blazor, the standard and recommended approach is t
 \textbf{Visual Studio}: Right-click your solution, select Add > New Project, search for "Razor Class Library," and name it (e.g., MySharedComponents).
 \newline
 Note: Ensure you do not check "Support pages and views" unless you specifically need Razor Pages/MVC support, as it is unnecessary for Blazor-only projects.
+\newline
 \textbf{.NET CLI}: Run the following command in your solution folder:
 dotnet new razorclasslib -o MySharedComponents. 
 \subsection{Add Project References}
@@ -162,7 +163,7 @@ Add a @using statement for the shared library's namespace:
 \item
 \textbf{Static Assets (CSS/JS)}: Files in the RCL's wwwroot folder are accessible via the path \verb|_content/{LIBRARY_NAME}/{FILE_PATH}|. For example: \verb|<link href="_content/MySharedComponents/styles.css" rel="stylesheet" />|.
 \item
-\textbf{Routable Pages}: If you include pages with @page directives in the RCL, you must tell the Blazor Router where to find them by adding the library's assembly to the AdditionalAssemblies parameter in App.razor or Routes.razor.
+\textbf{Routable Pages}: If you include pages with @page directives in the RCL, you must tell the Blazor Router where to find them by adding the library's assembly to the \emph{AdditionalAssemblies} parameter in \emph{App.razor} or \emph{Routes.razor}.
 \item
 \textbf{Legacy "Shared" Project:} Older ".NET Core Hosted" WebAssembly templates automatically created a Shared project for data models. In modern Blazor Web Apps (.NET 8+), use a standard Class Library or RCL to achieve the same result.
 \end{enumerate}
