@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Shared.Models;
+using TestREST.API.Database;
 using TestREST.API.Dtos;
 
 namespace TestREST.API.Endpoints;

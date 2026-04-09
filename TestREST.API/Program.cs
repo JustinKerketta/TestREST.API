@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TestREST.API.Database;
 using TestREST.API.Endpoints;
 
 namespace TestREST.API;
