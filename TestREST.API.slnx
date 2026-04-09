@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Shared/Shared.csproj" Id="cb605842-100c-43ba-9522-23e22da03d4c" />
   <Project Path="TestREST.API/TestREST.API.csproj" />
 </Solution>
