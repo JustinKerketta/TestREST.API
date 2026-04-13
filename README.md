@@ -90,3 +90,9 @@ builder.Services.AddDbContextFactory<CustomDbContext>(options =>
 $env:ConnectionStrings__DefaultConnection="DefaultConnection": "Data Source=localhost,1433;Persist Security Info=True;User ID=sa;Password=Mssql2025!;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=\"SQL Server Management Studio\";Command Timeout=0;Database=RESTAPI;"
 ```
 The code in `Program.cs` does not change. Setting the environment variable as shown abouve will add the connection string `"ConnectionStrings:DefaultConnection"` to `builder.Configuration`.
+
+### .NET Secret Manager
+1. `dotnet user-secrets init`
+2. `dotnet user-secrets set Authentication:Schemes:OpenIdConnect:ClientSecret` *secretValue*
+3. `dotnet user-secrets list`
+
