@@ -5,9 +5,9 @@ docker run --name LatexNotesBuild --rm -v ".:/data" blang/latex pdflatex DevNote
 ### 2. Docker command to run SQL Server container
 ```
 docker run -d `
-   --name sql1 `
+   --name YourContainerName `
    -e "ACCEPT_EULA=y" `
-   -e 'MSSQL_SA_PASSWORD=JustinK11%#' `
+   -e 'MSSQL_SA_PASSWORD=YourSQLPasword' `
    -p 1433:1433 `
    -v sqlServerVolume:/var/opt/mssql `
    mcr.microsoft.com/mssql/server:2025-latest
